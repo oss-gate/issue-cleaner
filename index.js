@@ -1,15 +1,31 @@
+const ParseTitle = require('./lib/parse-title')
+const isAfter = require('date-fns/is_after')
+const createScheduler = require('probot-scheduler')
+
 module.exports = app => {
-  // Your code here
-  app.log('Yay, the app was loaded!')
+  createScheduler(app, { interval: 12 * 60 * 60 * 1000 })
 
-  app.on('issues.opened', async context => {
-    const issueComment = context.issue({ body: 'Thanks for opening this issue!' })
-    return context.github.issues.createComment(issueComment)
+  app.on('schedule.repository', async context => {
+    const { owner, repo } = context.repo()
+    const q = `repo:${owner}/${repo} state:open`
+
+    const issues = await context.github.search.issues({ q })
+
+    await Promise.all(issues.data.items.map(async result => {
+      result = context.repo(result)
+
+      const { title } = result
+      const { date, isEventIssue } = new ParseTitle(title)
+
+      if (!isAfter(new Date(), date) || !isEventIssue) return
+
+      const issue = (object) => {
+        const { owner, repo, number } = result
+        return Object.assign({ owner, repo, number }, object)
+      }
+
+      await context.github.issues.createComment(issue({ body: 'おつかれさまでした！' }))
+      await context.github.issues.update(issue({ state: 'closed' }))
+    }))
   })
-
-  // For more information on building apps:
-  // https://probot.github.io/docs/
-
-  // To get your app running against GitHub, see:
-  // https://probot.github.io/docs/development/
 }
