@@ -1,5 +1,7 @@
 const ParseTitle = require('../lib/parse-title')
 const format = require('date-fns/format')
+const isAfter = require('date-fns/is_after')
+const parse = require('date-fns/parse')
 
 describe('ParseTitle', () => {
   let parseWorkshopTitle
@@ -57,5 +59,17 @@ describe('ParseTitle', () => {
     const { isEventIssue } = parseOtherTitle
 
     expect(isEventIssue).toBe(false)
+  })
+
+  test('Not process in a same day', async () => {
+    const { date } = parseWorkshopTitle
+
+    expect(isAfter(parse('2018-12-31'), date)).toBe(false)
+  })
+
+  test('Process in after day', async () => {
+    const { date } = parseWorkshopTitle
+
+    expect(isAfter(parse('2019-01-01'), date)).toBe(true)
   })
 })
