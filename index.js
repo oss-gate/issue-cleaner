@@ -1,5 +1,6 @@
 const ParseTitle = require('./lib/parse-title')
 const isAfter = require('date-fns/is_after')
+const startOfToday = require('date-fns/start_of_today')
 const createScheduler = require('probot-scheduler')
 
 module.exports = app => {
@@ -17,7 +18,7 @@ module.exports = app => {
       const { title } = result
       const { date, isEventIssue } = new ParseTitle(title)
 
-      if (!isAfter(new Date(), date) || !isEventIssue) return
+      if (!isAfter(startOfToday(), date) || !isEventIssue) return
 
       const issue = (object) => {
         const { owner, repo, number } = result

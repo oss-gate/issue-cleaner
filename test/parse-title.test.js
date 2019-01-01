@@ -1,6 +1,5 @@
 const ParseTitle = require('../lib/parse-title')
 const format = require('date-fns/format')
-const addMinutes = require('date-fns/add_minutes')
 
 describe('ParseTitle', () => {
   let parseWorkshopTitle
@@ -33,9 +32,7 @@ describe('ParseTitle', () => {
   test('Parsing an Issue Date', async () => {
     const { rawDate, date } = parseWorkshopTitle
 
-    expect(rawDate ===
-      format(addMinutes(date, -date.getTimezoneOffset()), 'YYYY-MM-DD')
-    ).toBe(true)
+    expect(rawDate === format(date, 'YYYY-MM-DD')).toBe(true)
   })
 
   test('Parsing other title', async () => {
