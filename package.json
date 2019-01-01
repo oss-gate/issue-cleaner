@@ -1,7 +1,7 @@
 {
   "name": "oss-gate-issue-cleaner",
   "version": "1.0.0",
-  "description": "A Probot app for cleaning OSS Gate Workshop repository's issues",
+  "description": "A Probot app for cleaning issues of OSS Gate Workshop repository",
   "author": "Kimiaki Kuno <knokmki612@gmail.com>",
   "license": "ISC",
   "repository": "https://github.com/oss-gate/issue-cleaner.git",
