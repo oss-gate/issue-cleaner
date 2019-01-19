@@ -61,6 +61,12 @@ describe('ParseTitle', () => {
     expect(isEventIssue).toBe(false)
   })
 
+  test('Assures that the title doesn\'t follow correct date string', async () => {
+    const { isEventIssue } = new ParseTitle('OSS Gate Meetup :Tokyo : 2018-06-12&13')
+
+    expect(isEventIssue).toBe(false)
+  })
+
   test('Not process in a same day', async () => {
     const { date } = parseWorkshopTitle
 
