@@ -26,15 +26,13 @@ module.exports = app => {
     const issues = await context.github.search.issues({ q })
 
     await Promise.all(issues.data.items.map(async result => {
-      result = context.repo(result)
-
       const { title } = result
       const { date, isEventIssue } = new ParseTitle(title)
 
       if (!isAfter(startOfToday(), date) || !isEventIssue) return
 
       const issue = (object) => {
-        const { owner, repo, number } = result
+        const { number } = result
         return Object.assign({ owner, repo, number }, object)
       }
 
