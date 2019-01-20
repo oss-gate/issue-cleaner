@@ -6,11 +6,11 @@ const isAfter = require('date-fns/is_after')
 const startOfToday = require('date-fns/start_of_today')
 const createScheduler = require('probot-scheduler')
 
-const generateMessage = async () => {
+const generateMessage = async (isWorkshop) => {
   const readFile = util.promisify(fs.readFile)
   const templatePath = `${__dirname}/template/message.mustache`
   const message = await readFile(templatePath, 'utf8')
-  const view = { hasEvents: false }
+  const view = { isWorkshop, hasEvents: false }
 
   return Mustache.render(message, view)
 }
@@ -22,12 +22,13 @@ module.exports = app => {
     const { owner, repo } = context.repo()
     const q = `repo:${owner}/${repo} state:open`
 
-    const message = await generateMessage()
     const issues = await context.github.search.issues({ q })
 
     await Promise.all(issues.data.items.map(async result => {
       const { title } = result
-      const { date, isEventIssue } = new ParseTitle(title)
+      const { date, isWorkshop, isEventIssue } = new ParseTitle(title)
+
+      const message = await generateMessage(isWorkshop)
 
       if (!isAfter(startOfToday(), date) || !isEventIssue) return
 
