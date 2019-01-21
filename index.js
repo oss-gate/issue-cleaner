@@ -1,4 +1,5 @@
 const ParseTitle = require('./lib/parse-title')
+const Doorkeeper = require('./lib/doorkeeper')
 const Mustache = require('mustache')
 const fs = require('fs')
 const util = require('util')
@@ -6,11 +7,10 @@ const isAfter = require('date-fns/is_after')
 const startOfToday = require('date-fns/start_of_today')
 const createScheduler = require('probot-scheduler')
 
-const generateMessage = async (isWorkshop) => {
+const generateMessage = async (view) => {
   const readFile = util.promisify(fs.readFile)
   const templatePath = `${__dirname}/template/message.mustache`
   const message = await readFile(templatePath, 'utf8')
-  const view = { isWorkshop, hasEvents: false }
 
   return Mustache.render(message, view)
 }
@@ -24,11 +24,15 @@ module.exports = app => {
 
     const issues = await context.github.search.issues({ q })
 
+    const doorkeeper = new Doorkeeper()
+    const events = await doorkeeper.events('oss-gate').catch(() => {})
+    const hasEvents = typeof events === 'object'
+
     await Promise.all(issues.data.items.map(async result => {
       const { title } = result
       const { date, isWorkshop, isEventIssue } = new ParseTitle(title)
 
-      const message = await generateMessage(isWorkshop)
+      const message = await generateMessage({ isWorkshop, hasEvents, events })
 
       if (!isAfter(startOfToday(), date) || !isEventIssue) return
 
