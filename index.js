@@ -25,7 +25,7 @@ module.exports = app => {
     const issues = await context.github.search.issues({ q })
 
     const doorkeeper = new Doorkeeper()
-    const events = await doorkeeper.events('oss-gate').catch(() => {})
+    const events = await doorkeeper.events(owner).catch(() => {})
     const hasEvents = typeof events === 'object'
 
     await Promise.all(issues.data.items.map(async result => {
