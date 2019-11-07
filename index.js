@@ -4,6 +4,7 @@ const Mustache = require('mustache')
 const fs = require('fs')
 const util = require('util')
 const isAfter = require('date-fns/is_after')
+const format = require('date-fns/format')
 const startOfToday = require('date-fns/start_of_today')
 const createScheduler = require('probot-scheduler')
 
@@ -30,7 +31,7 @@ module.exports = app => {
 
     await Promise.all(issues.data.items.map(async result => {
       const { title } = result
-      const { date, isWorkshop, isEventIssue } = new ParseTitle(title)
+      const { title: parsedTitle, date, isWorkshop, isEventIssue, isIrregularDate } = new ParseTitle(title)
 
       const message = await generateMessage({ isWorkshop, hasEvents, events })
 
@@ -40,9 +41,14 @@ module.exports = app => {
         const { number } = result
         return Object.assign({ owner, repo, number }, object)
       }
+      let updateIssue = { state: 'closed' }
+      if (isIrregularDate) {
+        parsedTitle[2] = format(date, 'YYYY-MM-DD')
+        updateIssue = { ...updateIssue, title: parsedTitle.join('') }
+      }
 
       await context.github.issues.createComment(issue({ body: message }))
-      await context.github.issues.update(issue({ state: 'closed' }))
+      await context.github.issues.update(issue(updateIssue))
     }))
   })
 }
