@@ -5,10 +5,12 @@ const parse = require('date-fns/parse')
 
 const workshop = 'OSS Gate Workshop         :Tokyo : 2018-12-31: knokmki612 :OSS Gate Issue Cleaner: Work log'
 const meetup = 'OSS Gate Meetup :Tokyo : 2018-06-12'
+const irregularDate = 'OSS Gate Meetup :Tokyo : 2018-6-12'
 const other = 'aaaaaaaa'
 
 const parseWorkshopTitle = new ParseTitle(workshop)
 const parseMeetupTitle = new ParseTitle(meetup)
+const parseIrregularDateTitle = new ParseTitle(irregularDate)
 const parseOtherTitle = new ParseTitle(other)
 
 describe('ParseTitle', () => {
@@ -43,8 +45,14 @@ describe('ParseTitle', () => {
     expect(isEventIssue).toBe(true)
   })
 
-  test('Assures that the title follows at format of the meetup event', () => {
+  test('Assures that the title follows a format of the meetup event', () => {
     const { isEventIssue } = parseMeetupTitle
+
+    expect(isEventIssue).toBe(true)
+  })
+
+  test('Assures that the title follows a format of a event includes irreguler date', () => {
+    const { isEventIssue } = parseIrregularDateTitle
 
     expect(isEventIssue).toBe(true)
   })
@@ -59,6 +67,12 @@ describe('ParseTitle', () => {
     const { isEventIssue } = new ParseTitle('OSS Gate Meetup :Tokyo : 2018-06-12&13')
 
     expect(isEventIssue).toBe(false)
+  })
+
+  test('Assures that the ParseTitle detect the irregular date format', () => {
+    const { isIrregularDate } = parseIrregularDateTitle
+
+    expect(isIrregularDate).toBe(true)
   })
 
   test('Not process in a same day', () => {
