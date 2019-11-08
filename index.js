@@ -44,7 +44,7 @@ module.exports = app => {
       let updateIssue = { state: 'closed' }
       if (isIrregularDate) {
         parsedTitle[2] = format(date, 'YYYY-MM-DD')
-        updateIssue = { ...updateIssue, title: parsedTitle.join('') }
+        updateIssue = { ...updateIssue, title: parsedTitle.join(': ') }
       }
 
       await context.github.issues.createComment(issue({ body: message }))
