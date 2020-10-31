@@ -34,7 +34,7 @@ const main = async () => {
     const issues = await octokit.search.issuesAndPullRequests({ q })
 
     const doorkeeper = new Doorkeeper()
-    const events = await doorkeeper.events(owner)
+    const events = await doorkeeper.events(core.getInput('DOORKEEPER_GROUP'))
     const hasEvents = typeof events === 'object'
 
     await Promise.all(issues.data.items.map(async result => {
