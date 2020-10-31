@@ -5,6 +5,10 @@ inputs:
     description: Secret GitHub API token to making API requests
     required: true
     default: ${{ github.token }}
+  DOORKEEPER_GROUP:
+    description: Group name of doorkeeper community
+    required: true
+    default: ''
 runs:
   using: 'node12'
   main: 'dist/index.js'
