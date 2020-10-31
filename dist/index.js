@@ -31,7 +31,7 @@ const main = async () => {
 
     const q = `repo:${owner}/${repo} state:open`
 
-    const issues = await octokit.search.issues({ q })
+    const issues = await octokit.search.issuesAndPullRequests({ q })
 
     const doorkeeper = new Doorkeeper()
     const events = await doorkeeper.events(owner)
