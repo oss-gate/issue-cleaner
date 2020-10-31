@@ -20,4 +20,4 @@ For more, check out the [Contributing Guide](CONTRIBUTING.md).
 
 ## License
 
-[ISC](LICENSE) © 2018 Kimiaki Kuno <knokmki612@gmail.com>
+[ISC](LICENSE) © 2020 OSS Gate
