@@ -1,6 +1,6 @@
 {
   "name": "oss-gate-issue-cleaner",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A GitHub Actions for cleaning issues of OSS Gate Workshop repository",
   "author": "OSS Gate",
   "license": "ISC",
