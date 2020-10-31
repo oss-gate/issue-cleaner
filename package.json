@@ -1,53 +1,39 @@
 {
   "name": "oss-gate-issue-cleaner",
-  "version": "1.0.0",
-  "description": "A Probot app for cleaning issues of OSS Gate Workshop repository",
-  "author": "Kimiaki Kuno <knokmki612@gmail.com>",
+  "version": "2.0.0",
+  "description": "A GitHub Actions for cleaning issues of OSS Gate Workshop repository",
+  "author": "OSS Gate",
   "license": "ISC",
   "repository": "https://github.com/oss-gate/issue-cleaner.git",
   "homepage": "https://github.com/oss-gate/issue-cleaner",
   "bugs": "https://github.com/oss-gate/issue-cleaner/issues",
   "keywords": [
-    "probot",
     "github",
-    "probot-app"
+    "github-actions"
   ],
   "scripts": {
-    "dev": "nodemon",
-    "now-start": "PRIVATE_KEY=$(echo $PRIVATE_KEY_BASE64 | base64 -d) probot run ./index.js",
-    "start": "probot run ./index.js",
     "lint": "eslint --fix",
     "test": "jest && eslint .",
     "test:watch": "jest --watch --notify --notifyMode=change --coverage"
   },
   "dependencies": {
+    "@actions/core": "^1.2.6",
+    "@actions/github": "^4.0.0",
     "date-fns": "^1.30.1",
-    "mustache": "^3.0.1",
-    "node-fetch": "^2.3.0",
-    "probot": "^7.2.0",
-    "probot-scheduler": "^1.2.0"
+    "mustache": "^3.2.1",
+    "node-fetch": "^2.6.1"
   },
   "devDependencies": {
-    "eslint": "^5.11.1",
+    "eslint": "^5.16.0",
     "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-node": "^8.0.0",
-    "eslint-plugin-promise": "^4.0.1",
-    "eslint-plugin-standard": "^4.0.0",
-    "jest": "^22.4.3",
-    "nock": "^10.0.0",
-    "nodemon": "^1.17.2",
-    "smee-client": "^1.0.2"
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.2",
+    "jest": "^26.6.1"
   },
   "engines": {
-    "node": ">= 8.3.0"
-  },
-  "nodemonConfig": {
-    "exec": "npm start",
-    "watch": [
-      ".env",
-      "."
-    ]
+    "node": ">= 12"
   },
   "jest": {
     "testEnvironment": "node"

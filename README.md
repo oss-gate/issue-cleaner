@@ -1,16 +1,6 @@
 # oss-gate-issue-cleaner
 
-> A GitHub App built with [Probot](https://github.com/probot/probot) that A Probot app for cleaning OSS Gate Workshop repository&#x27;s issues
-
-## Setup
-
-```sh
-# Install dependencies
-npm install
-
-# Run the bot
-npm start
-```
+A GitHub Actions for cleaning OSS Gate Workshop repository&#x27;s issues
 
 ## Contributing
 
