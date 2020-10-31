@@ -17,38 +17,42 @@ const generateMessage = async (view) => {
   return Mustache.render(message, view)
 }
 
-try {
-  const owner = core.getInput('owner')
-  const repo = core.getInput('repo')
-  const q = `repo:${owner}/${repo} state:open`
+const main = async () => {
+  try {
+    const owner = core.getInput('owner')
+    const repo = core.getInput('repo')
+    const q = `repo:${owner}/${repo} state:open`
 
-  const issues = await github.search.issues({ q })
+    const issues = await github.search.issues({ q })
 
-  const doorkeeper = new Doorkeeper()
-  const events = await doorkeeper.events(owner)
-  const hasEvents = typeof events === 'object'
+    const doorkeeper = new Doorkeeper()
+    const events = await doorkeeper.events(owner)
+    const hasEvents = typeof events === 'object'
 
-  await Promise.all(issues.data.items.map(async result => {
-    const { title } = result
-    const { title: parsedTitle, date, isWorkshop, isEventIssue, isIrregularDate } = new ParseTitle(title)
+    await Promise.all(issues.data.items.map(async result => {
+      const { title } = result
+      const { title: parsedTitle, date, isWorkshop, isEventIssue, isIrregularDate } = new ParseTitle(title)
 
-    const message = await generateMessage({ isWorkshop, hasEvents, events })
+      const message = await generateMessage({ isWorkshop, hasEvents, events })
 
-    if (!isAfter(startOfToday(), date) || !isEventIssue) return
+      if (!isAfter(startOfToday(), date) || !isEventIssue) return
 
-    const issue = (object) => {
-      const { number } = result
-      return Object.assign({ owner, repo, number }, object)
-    }
-    let updateIssue = { state: 'closed' }
-    if (isIrregularDate) {
-      parsedTitle[2] = format(date, 'YYYY-MM-DD')
-      updateIssue = { ...updateIssue, title: parsedTitle.join(': ') }
-    }
+      const issue = (object) => {
+        const { number } = result
+        return Object.assign({ owner, repo, number }, object)
+      }
+      let updateIssue = { state: 'closed' }
+      if (isIrregularDate) {
+        parsedTitle[2] = format(date, 'YYYY-MM-DD')
+        updateIssue = { ...updateIssue, title: parsedTitle.join(': ') }
+      }
 
-    await github.issues.createComment(issue({ body: message }))
-    await github.issues.update(issue(updateIssue))
-  }))
-} catch (error) {
-  core.setFailed(error.message)
+      await github.issues.createComment(issue({ body: message }))
+      await github.issues.update(issue(updateIssue))
+    }))
+  } catch (error) {
+    core.setFailed(error.message)
+  }
 }
+
+main()
