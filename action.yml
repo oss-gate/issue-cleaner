@@ -1,14 +1,10 @@
 name: 'OSS Gate Issue Cleaner'
 description: 'Cleaning issues of OSS Gate Workshop repository'
 inputs:
-  owner:
-    description: 'The owner of workshop repository'
+  GITHUB_TOKEN:
+    description: Secret GitHub API token to making API requests
     required: true
-    default: 'oss-gate'
-  repo:
-    description: 'The repo name of workshop repository'
-    required: true
-    default: 'workshop'
+    default: ${{ github.token }}
 runs:
   using: 'node12'
-  main: 'index.js'
+  main: 'lib/index.js'

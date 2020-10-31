@@ -19,11 +19,12 @@ const generateMessage = async (view) => {
 
 const main = async () => {
   try {
-    const owner = core.getInput('owner')
-    const repo = core.getInput('repo')
+    const { owner, repo } = github.context
+    const octokit = github.getOctokit(core.getInput('GITHUB_TOKEN'))
+
     const q = `repo:${owner}/${repo} state:open`
 
-    const issues = await github.search.issues({ q })
+    const issues = await octokit.search.issues({ q })
 
     const doorkeeper = new Doorkeeper()
     const events = await doorkeeper.events(owner)
@@ -47,8 +48,8 @@ const main = async () => {
         updateIssue = { ...updateIssue, title: parsedTitle.join(': ') }
       }
 
-      await github.issues.createComment(issue({ body: message }))
-      await github.issues.update(issue(updateIssue))
+      await octokit.issues.createComment(issue({ body: message }))
+      await octokit.issues.update(issue(updateIssue))
     }))
   } catch (error) {
     core.setFailed(error.message)
