@@ -1,6 +1,6 @@
-# oss-gate-issue-cleaner
+# OSS Gate Issue Cleaner
 
-A GitHub Actions for cleaning OSS Gate Workshop repository&#x27;s issues
+A GitHub Actions for cleaning issues of OSS Gate Workshop repository
 
 ## Contributing
 
