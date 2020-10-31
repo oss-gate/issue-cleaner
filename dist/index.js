@@ -26,7 +26,7 @@ const generateMessage = async (view) => {
 
 const main = async () => {
   try {
-    const { owner, repo } = github.context
+    const { owner, repo } = github.context.repo
     const octokit = github.getOctokit(core.getInput('GITHUB_TOKEN'))
 
     const q = `repo:${owner}/${repo} state:open`
