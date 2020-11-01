@@ -61,7 +61,7 @@ const main = async () => {
       await octokit.issues.update(issue(updateIssue))
     }))
   } catch (error) {
-    core.setFailed(error.message)
+    core.setFailed(error)
   }
 }
 
