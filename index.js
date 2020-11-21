@@ -42,7 +42,7 @@ const main = async () => {
 
       const issue = (object) => {
         const { number } = result
-        return Object.assign({ owner, repo, number }, object)
+        return Object.assign({ owner, repo, issue_number: number }, object)
       }
       let updateIssue = { state: 'closed' }
       if (isIrregularDate) {
