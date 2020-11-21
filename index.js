@@ -19,14 +19,15 @@ const generateMessage = async (view) => {
 
 const main = async () => {
   try {
-    const owner = core.getInput('owner')
-    const repo = core.getInput('repo')
+    const { owner, repo } = github.context.repo
+    const octokit = github.getOctokit(core.getInput('GITHUB_TOKEN', { required: true }))
+
     const q = `repo:${owner}/${repo} state:open`
 
-    const issues = await github.search.issues({ q })
+    const issues = await octokit.search.issuesAndPullRequests({ q })
 
     const doorkeeper = new Doorkeeper()
-    const events = await doorkeeper.events(owner)
+    const events = await doorkeeper.events(core.getInput('DOORKEEPER_GROUP'))
     const hasEvents = typeof events === 'object'
 
     await Promise.all(issues.data.items.map(async result => {
@@ -39,7 +40,7 @@ const main = async () => {
 
       const issue = (object) => {
         const { number } = result
-        return Object.assign({ owner, repo, number }, object)
+        return Object.assign({ owner, repo, issue_number: number }, object)
       }
       let updateIssue = { state: 'closed' }
       if (isIrregularDate) {
@@ -47,10 +48,11 @@ const main = async () => {
         updateIssue = { ...updateIssue, title: parsedTitle.join(': ') }
       }
 
-      await github.issues.createComment(issue({ body: message }))
-      await github.issues.update(issue(updateIssue))
+      await octokit.issues.createComment(issue({ body: message }))
+      await octokit.issues.update(issue(updateIssue))
     }))
   } catch (error) {
+    console.log(error)
     core.setFailed(error.message)
   }
 }
