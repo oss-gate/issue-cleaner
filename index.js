@@ -23,7 +23,6 @@ const main = async () => {
     const octokit = github.getOctokit(core.getInput('GITHUB_TOKEN', { required: true }))
 
     const q = `repo:${owner}/${repo} state:open`
-    console.log(q)
 
     const issues = await octokit.search.issuesAndPullRequests({ q })
 
@@ -32,7 +31,6 @@ const main = async () => {
     const hasEvents = typeof events === 'object'
 
     await Promise.all(issues.data.items.map(async result => {
-      console.log(result)
       const { title } = result
       const { title: parsedTitle, date, isWorkshop, isEventIssue, isIrregularDate } = new ParseTitle(title)
 
