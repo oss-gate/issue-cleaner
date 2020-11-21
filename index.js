@@ -20,7 +20,7 @@ const generateMessage = async (view) => {
 const main = async () => {
   try {
     const { owner, repo } = github.context.repo
-    const octokit = github.getOctokit(core.getInput('GITHUB_TOKEN'), { log: console })
+    const octokit = github.getOctokit(core.getInput('GITHUB_TOKEN', { required: true }))
 
     const q = `repo:${owner}/${repo} state:open`
     console.log(q)
@@ -54,7 +54,8 @@ const main = async () => {
       await octokit.issues.update(issue(updateIssue))
     }))
   } catch (error) {
-    core.setFailed(error)
+    console.log(error)
+    core.setFailed(error.message)
   }
 }
 
