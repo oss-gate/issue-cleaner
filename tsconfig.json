@@ -3,7 +3,6 @@
     "target": "es2019",
     "module": "commonjs",
     "lib": ["es2019"],
-    "allowJs": true,
     "outDir": "./lib",
     "rootDir": "./src",
     "removeComments": true,
