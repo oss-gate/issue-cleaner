@@ -17,7 +17,7 @@ const main = async () => {
       const { title, number } = result;
 
       if (!(isWorkshop(title) || isMeetup(title))) return;
-      if (isBefore(getDate(title), startOfToday())) return;
+      if (isBefore(startOfToday(), getDate(title))) return;
 
       const issue = {
         owner,
