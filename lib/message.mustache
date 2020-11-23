@@ -1,0 +1,17 @@
+おつかれさまでした！
+{{#isWorkshop}}
+
+ワークショップの終了にともないissuesを閉じましたが、その後も作業を続けていただいて大丈夫です！
+
+是非このissueを活用なさってください。
+{{/isWorkshop}}
+{{#hasEvents}}
+
+今後もイベントの開催を予定しています。
+
+{{#events}}
+  - [{{event.title}}]({{event.public_url}})
+{{/events}}
+
+参加をお待ちしています！
+{{/hasEvents}}
