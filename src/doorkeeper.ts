@@ -10,7 +10,7 @@ const request = async (api: string) =>
 
 export const getEvents = (group = "") => {
   if (group === "") return request("/events");
-  return `/groups/${group}/events`;
+  return request(`/groups/${group}/events`);
 };
 
 export const getEvent = (id: string) => request(`/events/${id}`);
