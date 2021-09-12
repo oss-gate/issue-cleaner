@@ -4,7 +4,7 @@ A GitHub Actions for cleaning issues of OSS Gate Workshop repository
 
 ## Usage
 
-Write a workflow file as follows at .github/worfklow/issue.yaml in your repository.
+Write a workflow file as follows at `.github/workflow/issue.yaml` in your repository.
 
 ```yaml
 on: [workflow_dispatch]
