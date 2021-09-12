@@ -9,7 +9,7 @@ const main = async () => {
   const { owner, repo } = context.repo;
   const octokit = getOctokit(getInput("GITHUB_TOKEN", { required: true }));
   const q = `repo:${owner}/${repo} state:open`;
-  const issues = await octokit.search.issuesAndPullRequests({ q });
+  const issues = await octokit.rest.search.issuesAndPullRequests({ q });
   const events = await getEvents(getInput("DOORKEEPER_GROUP"));
 
   await Promise.all(
@@ -30,12 +30,12 @@ const main = async () => {
         events,
       });
 
-      await octokit.issues.update({
+      await octokit.rest.issues.update({
         ...issue,
         state: "closed",
         title: normalize(title),
       });
-      await octokit.issues.createComment({ ...issue, body: message });
+      await octokit.rest.issues.createComment({ ...issue, body: message });
     })
   );
 };

@@ -5,14 +5,44 @@ const options = {
   method: "get",
   headers: { Authorization: `Bearer ${process.env.DOORKEEPER_TOKEN}` },
 } as const;
-const request = async (api: string) =>
-  (await fetch(`${baseUrl}${api}`, options)).json();
+const request = async <T>(api: string) =>
+  (await fetch(`${baseUrl}${api}`, options)).json() as Promise<T>;
 
-export const getEvents = (group = "") => {
-  if (group === "") return request("/events");
-  return request(`/groups/${group}/events`);
+type DoorkeeperEvent = {
+  title: string;
+  id: number;
+  starts_at: string;
+  ends_at: string;
+  venue_name: string;
+  address: string;
+  lat: string;
+  long: string;
+  ticket_limit: number;
+  published_at: string;
+  group: number;
+  description: string;
+  public_url: string;
+  participants: number;
+  waitlisted: number;
 };
 
-export const getEvent = (id: string) => request(`/events/${id}`);
+type DoorkeeperGroup = {
+  id: number;
+  name: string;
+  country_code: string;
+  logo: string;
+  description: string;
+  public_url: string;
+  members_count: number;
+};
 
-export const getGroup = (group: string) => request(`/groups/${group}`);
+export const getEvents = (group = "") => {
+  if (group === "") return request<{ event: DoorkeeperEvent }[]>("/events");
+  return request<{ event: DoorkeeperEvent }[]>(`/groups/${group}/events`);
+};
+
+export const getEvent = (id: string) =>
+  request<{ event: DoorkeeperEvent }>(`/events/${id}`);
+
+export const getGroup = (group: string) =>
+  request<{ group: DoorkeeperGroup }>(`/groups/${group}`);
