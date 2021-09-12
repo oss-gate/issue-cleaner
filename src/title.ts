@@ -1,5 +1,3 @@
-import { parseISO } from "date-fns";
-
 export const split = (title: string): string[] =>
   title.split(":").map((chunk: string) => chunk.trim());
 
@@ -35,7 +33,7 @@ export const getISODate = (title: string): string => {
 };
 
 export const getDate = (title: string): Date => {
-  return parseISO(getISODate(title));
+  return new Date(getISODate(title));
 };
 
 export const normalize = (title: string): string => {
