@@ -3,7 +3,7 @@ import { getMessage } from "./mustache";
 import { getEvents as getDoorkeeperEvents } from "./doorkeeper";
 import { getEvents as getConnpassEvents } from "./connpass";
 import clsx from "clsx";
-import { isBefore, startOfToday } from "date-fns";
+import { isBefore, endOfToday } from "date-fns";
 import { getInput, setFailed } from "@actions/core";
 import { context, getOctokit } from "@actions/github";
 
@@ -30,7 +30,7 @@ const main = async () => {
       const { title, number } = result;
 
       if (!(isWorkshop(title) || isMeetup(title))) return;
-      if (isBefore(startOfToday(), getDate(title))) return;
+      if (isBefore(endOfToday(), getDate(title))) return;
 
       const issue = {
         owner,
