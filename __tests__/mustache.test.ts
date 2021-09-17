@@ -4,9 +4,11 @@ const path = `${__dirname}/../src/message.mustache`;
 
 const result = `おつかれさまでした！
 
-ワークショップの終了にともないissuesを閉じましたが、その後も作業を続けていただいて大丈夫です！
+ワークショップの終了にともないissueを閉じますが、このまま作業メモとして使っても構いません :ok_hand:
 
-是非このissueを活用なさってください。
+[ワークショップの感想](https://oss-gate.github.io/workshop/report.html)を集めています！
+
+ブログなどに書かれた際は、[このページ](https://github.com/oss-gate/oss-gate.github.io/blob/master/workshop/report.md)へリンクの追加をお願いします :pray:
 
 今後もイベントの開催を予定しています。
 
@@ -14,13 +16,17 @@ const result = `おつかれさまでした！
   - [b](test2)
   - [c](test3)
 
-参加をお待ちしています！
+またの参加をお待ちしています！
 `;
 const resultWithoutEvents = `おつかれさまでした！
 
-ワークショップの終了にともないissuesを閉じましたが、その後も作業を続けていただいて大丈夫です！
+ワークショップの終了にともないissueを閉じますが、このまま作業メモとして使っても構いません :ok_hand:
 
-是非このissueを活用なさってください。
+[ワークショップの感想](https://oss-gate.github.io/workshop/report.html)を集めています！
+
+ブログなどに書かれた際は、[このページ](https://github.com/oss-gate/oss-gate.github.io/blob/master/workshop/report.md)へリンクの追加をお願いします :pray:
+
+またの参加をお待ちしています！
 `;
 const resultNonWorkshop = `おつかれさまでした！
 
@@ -30,7 +36,7 @@ const resultNonWorkshop = `おつかれさまでした！
   - [b](test2)
   - [c](test3)
 
-参加をお待ちしています！
+またの参加をお待ちしています！
 `;
 
 describe("Message with anouncement of events", () => {
