@@ -23,6 +23,7 @@ const main = async () => {
   );
   const connpassEvents = await getConnpassEvents({
     keyword: getInput("CONNPASS_KEYWORD"),
+    count: 3,
   });
 
   await Promise.all(
