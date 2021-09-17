@@ -19,6 +19,7 @@ jobs:
       - uses: oss-gate/issue-cleaner@v2
         with:
           DOORKEEPER_GROUP: oss-gate
+          CONNPASS_KEYWORD: oss gate
         env:
           DOORKEEPER_TOKEN: ${{ secrets.DOORKEEPER_TOKEN }}
 ```
@@ -39,6 +40,7 @@ jobs:
       - uses: oss-gate/issue-cleaner@v2
         with:
           DOORKEEPER_GROUP: oss-gate
+          CONNPASS_KEYWORD: oss gate
           author: ${{ github.event.sender.login }}
         env:
           DOORKEEPER_TOKEN: ${{ secrets.DOORKEEPER_TOKEN }}

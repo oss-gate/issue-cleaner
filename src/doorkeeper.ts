@@ -8,7 +8,7 @@ const options = {
 const request = async <T>(api: string) =>
   (await fetch(`${baseUrl}${api}`, options)).json() as Promise<T>;
 
-type DoorkeeperEvent = {
+export type DoorkeeperEvent = {
   title: string;
   id: number;
   starts_at: string;
@@ -26,7 +26,7 @@ type DoorkeeperEvent = {
   waitlisted: number;
 };
 
-type DoorkeeperGroup = {
+export type DoorkeeperGroup = {
   id: number;
   name: string;
   country_code: string;

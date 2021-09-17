@@ -1,3 +1,5 @@
+import type { DoorkeeperEvent } from "../src/doorkeeper";
+import type { ConnpassEvents } from "../src/connpass";
 import { getMessage } from "../src/mustache";
 
 const path = `${__dirname}/../src/message.mustache`;
@@ -15,6 +17,8 @@ const result = `おつかれさまでした！
   - [a](test1)
   - [b](test2)
   - [c](test3)
+  - [d](test4)
+  - [e](test5)
 
 またの参加をお待ちしています！
 `;
@@ -35,6 +39,8 @@ const resultNonWorkshop = `おつかれさまでした！
   - [a](test1)
   - [b](test2)
   - [c](test3)
+  - [d](test4)
+  - [e](test5)
 
 またの参加をお待ちしています！
 `;
@@ -43,14 +49,15 @@ describe("Message with anouncement of events", () => {
   let view: {
     isWorkshop: boolean;
     hasEvents: boolean;
-    events: { event: { title: string; public_url: string } }[];
+    doorkeeperEvents: { event: Pick<DoorkeeperEvent, "title" | "public_url"> }[];
+    connpassEvents: Pick<ConnpassEvents["events"][number], "title" | "event_url">[];
   };
 
   beforeEach(() => {
     view = {
       isWorkshop: true,
       hasEvents: true,
-      events: [
+      doorkeeperEvents: [
         {
           event: {
             title: "a",
@@ -70,6 +77,16 @@ describe("Message with anouncement of events", () => {
           },
         },
       ],
+      connpassEvents: [
+        {
+          title: "d",
+          event_url: "test4"
+        },
+        {
+          title: "e",
+          event_url: "test5"
+        }
+      ]
     };
   });
 
