@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 
-const baseUrl = "https://connpass.com/api/v2";
+const baseUrl = "https://connpass.com/api/v1";
 const options = {
   method: "get",
 } as const;
@@ -56,7 +56,7 @@ export type ConnpassOptions = Partial<{
 
 export const getEvents = (options: ConnpassOptions) => {
   return request<ConnpassEvents>(
-    `/events?${encodeURI(
+    `/event?${encodeURI(
       Object.entries(options)
         .map(([key, value]) => `${key}=${value}`)
         .join("&")
