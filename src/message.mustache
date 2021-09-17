@@ -11,9 +11,12 @@
 {{#hasEvents}}
 今後もイベントの開催を予定しています。
 
-{{#events}}
+{{#doorkeeperEvents}}
   - [{{event.title}}]({{event.public_url}})
-{{/events}}
-
+{{/doorkeeperEvents}}
+{{#connpassEvents}}
+  - [{{event.title}}]({{event.event_url}})
+{{/connpassEvents}}
 {{/hasEvents}}
+
 またの参加をお待ちしています！
