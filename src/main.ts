@@ -1,6 +1,7 @@
 import { isWorkshop, isMeetup, getDate, normalize } from "./title";
 import { getMessage } from "./mustache";
 import { getEvents } from "./doorkeeper";
+import clsx from "clsx";
 import { isBefore, startOfToday } from "date-fns";
 import { getInput, setFailed } from "@actions/core";
 import { context, getOctokit } from "@actions/github";
@@ -8,7 +9,13 @@ import { context, getOctokit } from "@actions/github";
 const main = async () => {
   const { owner, repo } = context.repo;
   const octokit = getOctokit(getInput("GITHUB_TOKEN", { required: true }));
-  const q = `repo:${owner}/${repo} state:open`;
+  const author = getInput("author");
+  const q = clsx(
+    `repo:${owner}/${repo}`,
+    "type:issue",
+    "state:open",
+    author && `author:${author}`
+  );
   const issues = await octokit.rest.search.issuesAndPullRequests({ q });
   const events = await getEvents(getInput("DOORKEEPER_GROUP"));
 
