@@ -9,6 +9,13 @@ inputs:
     description: Group name of doorkeeper community
     required: true
     default: ''
+  CONNPASS_KEYWORD:
+    description: Search keyword of connpass events
+    required: true
+    default: ''
+  author:
+    description: Filter issues by author
+    required: false
 runs:
   using: 'node12'
   main: 'lib/main.js'

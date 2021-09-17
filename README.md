@@ -6,17 +6,42 @@ A GitHub Actions for cleaning issues of OSS Gate Workshop repository
 
 Write a workflow file as follows at `.github/workflow/issue.yaml` in your repository.
 
+### Clean all event issues by manual trigger
+
 ```yaml
 on: [workflow_dispatch]
 
 jobs:
-  build:
+  clean:
     runs-on: ubuntu-latest
 
     steps:
       - uses: oss-gate/issue-cleaner@v2
         with:
           DOORKEEPER_GROUP: oss-gate
+          CONNPASS_KEYWORD: oss gate
+        env:
+          DOORKEEPER_TOKEN: ${{ secrets.DOORKEEPER_TOKEN }}
+```
+
+### Clean one person event issues when PR opened
+
+```yaml
+on:
+  push:
+    paths:
+      - "tutorial/retrospectives/**/*.yaml"
+
+jobs:
+  clean:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: oss-gate/issue-cleaner@v2
+        with:
+          DOORKEEPER_GROUP: oss-gate
+          CONNPASS_KEYWORD: oss gate
+          author: ${{ github.event.sender.login }}
         env:
           DOORKEEPER_TOKEN: ${{ secrets.DOORKEEPER_TOKEN }}
 ```
