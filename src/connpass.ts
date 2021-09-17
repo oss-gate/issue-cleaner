@@ -7,11 +7,11 @@ const options = {
 const request = async <T>(api: string) =>
   (await fetch(`${baseUrl}${api}`, options)).json() as Promise<T>;
 
-type ConnpassEvents = {
+export type ConnpassEvents = {
   results_returned: number;
   results_available: number;
   results_start: number;
-  events: Array<{
+  events: {
     event_id: number;
     title: string;
     catch: string;
@@ -36,10 +36,10 @@ type ConnpassEvents = {
     accepted: number;
     waiting: number;
     updated_at: string;
-  }>;
+  }[];
 };
 
-type ConnpassOptions = Partial<{
+export type ConnpassOptions = Partial<{
   event_id: number;
   keyword: string;
   keyword_or: string;
