@@ -49,8 +49,13 @@ describe("Message with anouncement of events", () => {
   let view: {
     isWorkshop: boolean;
     hasEvents: boolean;
-    doorkeeperEvents: { event: Pick<DoorkeeperEvent, "title" | "public_url"> }[];
-    connpassEvents: Pick<ConnpassEvents["events"][number], "title" | "event_url">[];
+    doorkeeperEvents: {
+      event: Pick<DoorkeeperEvent, "title" | "public_url">;
+    }[];
+    connpassEvents: Pick<
+      ConnpassEvents["events"][number],
+      "title" | "event_url"
+    >[];
   };
 
   beforeEach(() => {
@@ -80,13 +85,13 @@ describe("Message with anouncement of events", () => {
       connpassEvents: [
         {
           title: "d",
-          event_url: "test4"
+          event_url: "test4",
         },
         {
           title: "e",
-          event_url: "test5"
-        }
-      ]
+          event_url: "test5",
+        },
+      ],
     };
   });
 
