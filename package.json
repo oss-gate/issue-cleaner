@@ -1,7 +1,7 @@
 {
   "name": "oss-gate-issue-cleaner",
   "description": "A GitHub Actions for cleaning issues of OSS Gate Workshop repository",
-  "version": "3.0.1",
+  "version": "3.1.1",
   "author": "OSS Gate",
   "bugs": "https://github.com/oss-gate/issue-cleaner/issues",
   "dependencies": {
