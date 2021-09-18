@@ -8,7 +8,6 @@
     "@actions/core": "^1.5.0",
     "@actions/github": "^5.0.0",
     "clsx": "^1.1.1",
-    "date-fns": "^2.23.0",
     "mustache": "^4.2.0",
     "node-fetch": "^2.6.2"
   },
