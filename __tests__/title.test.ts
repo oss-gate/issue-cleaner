@@ -1,5 +1,5 @@
 import { split, isWorkshop, isMeetup, isISODate, getDate } from "../src/title";
-import { format, isBefore, parseISO } from "date-fns";
+import { isBefore } from "../src/date";
 
 const workshop =
   "OSS Gate Workshop         :Tokyo : 2018-12-31: knokmki612 :OSS Gate Issue Cleaner: Work log";
@@ -7,7 +7,7 @@ const meetup = "OSS Gate Meetup :Tokyo : 2018-06-12";
 const dirtyDate = "OSS Gate Meetup :Tokyo : 2018-6-12";
 const other = "aaaaaaaa";
 
-describe("ParseTitle", () => {
+describe("Issue Title", () => {
   test("Parsing an Issue Title", () => {
     expect(split(workshop)).toMatchObject([
       "OSS Gate Workshop",
@@ -22,7 +22,9 @@ describe("ParseTitle", () => {
   test("Parsing an Issue Date", () => {
     const [, , date] = split(workshop);
 
-    expect(date === format(getDate(workshop), "yyyy-MM-dd")).toBe(true);
+    expect(date === getDate(workshop).toISOString().substring(0, 10)).toBe(
+      true
+    );
   });
 
   test("Parsing other title", () => {
@@ -57,11 +59,21 @@ describe("ParseTitle", () => {
     expect(isISODate(dirtyDate)).toBe(false);
   });
 
-  test("Not process in a same day", () => {
-    expect(isBefore(getDate(workshop), parseISO("2018-12-31"))).toBe(false);
+  test("Not process in before day", () => {
+    expect(!isBefore(new Date(Date.UTC(2018, 11, 30)), getDate(workshop))).toBe(
+      false
+    );
+  });
+
+  test("process in a same day", () => {
+    expect(
+      !isBefore(new Date(Date.UTC(2018, 11, 31, 1)), getDate(workshop))
+    ).toBe(true);
   });
 
   test("Process in after day", () => {
-    expect(isBefore(getDate(workshop), parseISO("2019-01-01"))).toBe(true);
+    expect(!isBefore(new Date(Date.UTC(2019, 0, 1)), getDate(workshop))).toBe(
+      true
+    );
   });
 });
