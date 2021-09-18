@@ -18,13 +18,17 @@ const main = async () => {
     author && `author:${author}`
   );
   const issues = await octokit.rest.search.issuesAndPullRequests({ q });
-  const doorkeeperEvents = await getDoorkeeperEvents(
-    getInput("DOORKEEPER_GROUP")
-  );
-  const connpassEvents = await getConnpassEvents({
-    keyword: getInput("CONNPASS_KEYWORD"),
-    count: 3,
-  });
+  const DOORKEEPER_GROUP = getInput("DOORKEEPER_GROUP");
+  const doorkeeperEvents = DOORKEEPER_GROUP
+    ? await getDoorkeeperEvents(DOORKEEPER_GROUP)
+    : [];
+  const CONNPASS_KEYWORD = getInput("CONNPASS_KEYWORD");
+  const connpassEvents = CONNPASS_KEYWORD
+    ? await getConnpassEvents({
+        keyword: CONNPASS_KEYWORD,
+        count: 3,
+      })
+    : { events: [] };
 
   await Promise.all(
     issues.data.items.map(async (result) => {
