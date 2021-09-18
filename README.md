@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: oss-gate/issue-cleaner@v2
+      - uses: oss-gate/issue-cleaner@v3
         with:
           DOORKEEPER_GROUP: oss-gate
           CONNPASS_KEYWORD: oss gate
@@ -37,7 +37,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: oss-gate/issue-cleaner@v2
+      - uses: oss-gate/issue-cleaner@v3
         with:
           DOORKEEPER_GROUP: oss-gate
           CONNPASS_KEYWORD: oss gate
