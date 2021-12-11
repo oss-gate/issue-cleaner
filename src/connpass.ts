@@ -4,8 +4,10 @@ const baseUrl = "https://connpass.com/api/v1";
 const options = {
   method: "get",
 } as const;
-const request = async <T>(api: string) =>
-  (await fetch(`${baseUrl}${api}`, options)).json() as Promise<T>;
+const request = async <T>(api: string) => {
+  const response = await fetch(`${baseUrl}${api}`, options);
+  return (await response.json()) as Promise<T>;
+};
 
 export type ConnpassEvents = {
   results_returned: number;
