@@ -5,7 +5,7 @@
 
 * FetchError invalid response json body ([10b6ba9](https://github.com/oss-gate/issue-cleaner/commit/10b6ba98bf9dcfc2d4e723c3b291e9cb0d571cc7))
 
-## 3.3.1 (2021-09-18)
+## 3.1.1 (2021-09-18)
 
 * feat: not show events when option not given ([2257b62](https://github.com/oss-gate/issue-cleaner/commit/2257b623a23791b5ca2fb6df0009f1397eccb2af))
 * feat: drop date-fns & use epoch time ([b4ada80](https://github.com/oss-gate/issue-cleaner/commit/b4ada800f0b318b01694e7db3b352e8a6a1b919e))
