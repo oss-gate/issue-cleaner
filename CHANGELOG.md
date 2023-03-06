@@ -1,3 +1,7 @@
+## [3.1.3](https://github.com/oss-gate/issue-cleaner/compare/v1.1.0...v3.1.3) (2023-03-06)
+
+
+
 ## 3.1.2 (2021-12-11)
 
 
