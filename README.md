@@ -1,5 +1,8 @@
 # OSS Gate Issue Cleaner
 
+> [!IMPORTANT]
+> This repository is no longer maintained. The workshop repository now closes work log issues with its own workflow instead; see [oss-gate/workshop@db0c132](https://github.com/oss-gate/workshop/commit/db0c1329fc04ea1c98055974b135780f957139d5).
+
 A GitHub Actions for cleaning issues of OSS Gate Workshop repository
 
 ## Usage
